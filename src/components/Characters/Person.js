@@ -11,7 +11,8 @@ export const Person = () => {
   console.log("person", personData);
   return (
     <div>
-      <span>{personData?.name}</span>
+      <h2>{personData?.name}</h2>
+      <span>Hair color: {personData?.hair_color}</span>
     </div>
   );
 };

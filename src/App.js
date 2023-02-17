@@ -7,22 +7,26 @@ import { Species } from "./components/Species";
 import { Starships } from "./components/Starships";
 import { Vehicles } from "./components/Vehicles";
 import { Person } from "./components/Characters/Person";
+import { Provider } from "react-redux";
+import { store } from "./Store/store";
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/people" element={<People />} />
-          <Route path="/people/:id" element={<Person />} />
-          <Route path="/planets" element={<Planets />} />
-          <Route path="/films" element={<Films />} />
-          <Route path="/starships" element={<Starships />} />
-          <Route path="/vehicles" element={<Vehicles />} />
-          <Route path="/species" element={<Species />} />
-        </Routes>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/people" element={<People />} />
+            <Route path="/people/:id" element={<Person />} />
+            <Route path="/planets" element={<Planets />} />
+            <Route path="/films" element={<Films />} />
+            <Route path="/starships" element={<Starships />} />
+            <Route path="/vehicles" element={<Vehicles />} />
+            <Route path="/species" element={<Species />} />
+          </Routes>
+        </Router>
+      </Provider>
     </div>
   );
 }
