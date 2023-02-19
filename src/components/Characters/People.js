@@ -24,7 +24,7 @@ export const People = () => {
       setUrl(`https://swapi.dev/api${location.pathname}/?page=${page}&format=json`);
       setCurrentSite(page);
     } else {
-      window.history.replaceState(null, "", "?page=1");
+      window.history.replaceState(undefined, "", "?page=1");
       setUrl(`https://swapi.dev/api${location.pathname}/?page=1&format=json`);
       setCurrentSite(1);
     }
@@ -40,13 +40,13 @@ export const People = () => {
     window.history.replaceState(data, "", "");
   }, [url]);
 
-  const changePage = useCallback(({ selected }) => {
-    if (selected !== currentSite - 1) {
-      setUrl(`https://swapi.dev/api${location.pathname}/?page=${+selected + 1}&format=json`);
-      window.history.pushState(data, "", `?page=${selected + 1}`);
-      setCurrentSite(selected + 1);
-    }
-  });
+  // const changePage = useCallback(({ selected }) => {
+  //   if (selected !== currentSite - 1) {
+  //     setUrl(`https://swapi.dev/api${location.pathname}/?page=${+selected + 1}&format=json`);
+  //     window.history.pushState(undefined, "", `?page=${selected + 1}`);
+  //     setCurrentSite(selected + 1);
+  //   }
+  // });
 
   return (
     <div>
@@ -57,10 +57,12 @@ export const People = () => {
           </div>
         );
       })}
-      <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={Math.ceil(data?.count ? Math.ceil(data.count / 10) : 0)} onPageChange={changePage} forcePage={currentSite - 1} />
-      {currentSite - 1}
+      {/* {Math.ceil(data?.count / 10) !== 1 && (
+        <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={Math.ceil(data?.count ? Math.ceil(data.count / 10) : 0)} onPageChange={changePage} forcePage={currentSite - 1} />
+      )} */}
+      <span> People: {currentSite - 1}</span>
 
-      {/* <Pagination data={data} setUrl={setUrl} url={url} /> */}
+      <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
     </div>
   );
 };

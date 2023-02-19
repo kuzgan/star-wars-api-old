@@ -4,35 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { changeUrl } from "../Store/urlSlice";
 
-export const Pagination = (props) => {
-  const [currentSite, setCurrentSite] = useState(1);
-  let location = useLocation();
-
+export const Pagination = ({ data, setUrl, currentSite, setCurrentSite, location }) => {
   const changePage = useCallback(({ selected }) => {
-    props.setUrl(`https://swapi.dev/api${location.pathname}/?page=${+selected}&format=json`);
-    window.history.pushState(props.data, "", `?page=${selected}`);
-    setCurrentSite(+selected);
+    if (selected !== currentSite - 1) {
+      setUrl(`https://swapi.dev/api${location.pathname}/?page=${+selected + 1}&format=json`);
+      window.history.pushState(undefined, "", `?page=${selected + 1}`);
+      setCurrentSite(selected + 1);
+    }
   });
 
   return (
     <div>
-      <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={Math.ceil(props.data.count / 10)} onPageChange={changePage} initialPage={currentSite} />
+      {Math.ceil(data?.count / 10) !== 1 && (
+        <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={Math.ceil(data?.count ? Math.ceil(data.count / 10) : 0)} onPageChange={changePage} forcePage={currentSite - 1} />
+      )}
       {currentSite}
-      {/* {location.search.replace("?page=", "")} */}
     </div>
   );
 };
-
-{
-  /* {props?.data.previous && <button onClick={() => dispatch(changeUrl({ url: props.data.previous }))}>Previous</button>}
-{props?.data.next && (
-  <button
-    onClick={() => {
-      dispatch(changeUrl({ url: props.data.next }));
-      console.log("click");
-    }}
-  >
-    Next
-  </button>
-)} */
-}
