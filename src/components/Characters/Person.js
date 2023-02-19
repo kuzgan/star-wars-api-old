@@ -8,7 +8,7 @@ export const Person = () => {
   useEffect(() => {
     fetchData(setPersonData, `https://swapi.dev/api${window.location.toString().replace(window.location.origin, "")}`);
   }, []);
-  console.log("person", personData);
+
   return (
     <div>
       <h2>{personData?.name}</h2>

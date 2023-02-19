@@ -1,36 +1,66 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useFetch } from "../../useFetch";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Pagination } from "../Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUrl } from "../../Store/urlSlice";
+import ReactPaginate from "react-paginate";
 
 export const People = () => {
-  const initialUrl = "https://swapi.dev/api/people/?page=1&format=json";
-  const [url, setUrl] = useState(initialUrl);
+  // https://swapi.dev/api/people/?page=1&format=json
+  //const initialUrl = `https://swapi.dev/api${window.location.pathname}/?page=1&format=json`;
+  // let newUrl = `https://swapi.dev/api/${window.location.pathname + window.location.search.replace("&format=json", "")}&format=json`;
+  const [url, setUrl] = useState("");
   const [data, setData] = useState({});
-  const urlRef = useRef(initialUrl);
   const [fetchData] = useFetch();
+  const [currentSite, setCurrentSite] = useState(1);
 
-  const dispatch = useDispatch();
-  const updatedUrl = useSelector((state) => state.url.value.url);
+  let location = useLocation();
+
+  const initFetch = useCallback(() => {
+    const pageRegex = /\?page=\d+/;
+    if (pageRegex.test(location.search)) {
+      const page = location.search.match(/\d+/)[0];
+      setUrl(`https://swapi.dev/api${location.pathname}/?page=${page}&format=json`);
+      setCurrentSite(page);
+    } else {
+      window.history.replaceState(null, "", "?page=1");
+      setUrl(`https://swapi.dev/api${location.pathname}/?page=1&format=json`);
+      setCurrentSite(1);
+    }
+  }, [location]);
 
   useEffect(() => {
-    fetchData(setData, urlRef.current);
-  }, [updatedUrl]);
+    initFetch();
+  }, [initFetch]);
 
-  if (updatedUrl !== "") urlRef.current = updatedUrl;
+  useEffect(() => {
+    if (url === "") return;
+    fetchData(setData, url);
+    window.history.replaceState(data, "", "");
+  }, [url]);
+
+  const changePage = useCallback(({ selected }) => {
+    if (selected !== currentSite - 1) {
+      setUrl(`https://swapi.dev/api${location.pathname}/?page=${+selected + 1}&format=json`);
+      window.history.pushState(data, "", `?page=${selected + 1}`);
+      setCurrentSite(selected + 1);
+    }
+  });
 
   return (
     <div>
-      {data.results?.map((element) => {
+      {data.results?.map((element, index) => {
         return (
-          <div key={element.name}>
+          <div key={index}>
             <Link to={element.url.replace("https://swapi.dev/api", "")}>{element.name}</Link>
           </div>
         );
       })}
-      <Pagination data={data} url={urlRef.current} />
+      <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={Math.ceil(data?.count ? Math.ceil(data.count / 10) : 0)} onPageChange={changePage} forcePage={currentSite - 1} />
+      {currentSite - 1}
+
+      {/* <Pagination data={data} setUrl={setUrl} url={url} /> */}
     </div>
   );
 };

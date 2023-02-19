@@ -11,6 +11,8 @@ import { Provider } from "react-redux";
 import { store } from "./Store/store";
 
 function App() {
+  //window.addEventListener("popstate", () => {});
+
   return (
     <div className="App">
       <Provider store={store}>
