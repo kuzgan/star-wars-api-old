@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
 
 export const useFetch = () => {
-  const fetchData = async (setFunction, url) => {
+  const fetchData = useCallback(async (setFunction, url) => {
     try {
-      console.log("useFetch przed if", url);
-      if (url === "") return;
-      console.log("useFetch po if", url);
+      console.log("useFetch:", url);
       const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       setFunction(data);
-      // window.history.pushState(data, "", url);
-    } catch (err) {
-      console.error("ERROR", err);
+      window.history.replaceState(data, "", "");
+    } catch (error) {
+      console.error("ERROR", error);
     }
-  };
+  }, []);
   return [fetchData];
 };

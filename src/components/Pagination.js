@@ -1,8 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import ReactPaginate from "react-paginate";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { changeUrl } from "../Store/urlSlice";
 
 export const Pagination = ({ data, setUrl, currentSite, setCurrentSite, location }) => {
   const changePage = useCallback(({ selected }) => {
@@ -18,7 +15,7 @@ export const Pagination = ({ data, setUrl, currentSite, setCurrentSite, location
       {Math.ceil(data?.count / 10) !== 1 && (
         <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={Math.ceil(data?.count ? Math.ceil(data.count / 10) : 0)} onPageChange={changePage} forcePage={currentSite - 1} />
       )}
-      {currentSite}
+      <div>Pagination: {currentSite - 1}</div>
     </div>
   );
 };
