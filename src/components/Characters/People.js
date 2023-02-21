@@ -17,11 +17,11 @@ export const People = () => {
     const pageRegex = /\?page=\d+/;
     if (pageRegex.test(location.search)) {
       const page = location.search.match(/\d+/)[0];
-      setUrl(`https://swapi.dev/api${location.pathname}/?page=${page}&format=json`);
+      setUrl(`https://swapi.dev/api${location.pathname}/?page=${page}`);
       setCurrentSite(page);
     } else {
       window.history.replaceState(undefined, "", "?page=1");
-      setUrl(`https://swapi.dev/api${location.pathname}/?page=1&format=json`);
+      setUrl(`https://swapi.dev/api${location.pathname}/?page=1`);
       setCurrentSite(1);
     }
   }, [location]);
@@ -33,11 +33,25 @@ export const People = () => {
   useEffect(() => {
     if (url === "") return;
     fetchData(setData, url);
-    window.history.replaceState(data, "", "");
+    //window.history.replaceState(undefined, "", "");
   }, [url]);
 
+  const handlePopState = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = urlParams.get("page");
+    setUrl(`https://swapi.dev/api${location.pathname}/?page=${page}`);
+    setCurrentSite(page);
+  };
+
+  useEffect(() => {
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
   return (
-    <div>
+    <div key={currentSite}>
       {data.results?.map((element, index) => {
         return (
           <div key={index}>
@@ -47,6 +61,7 @@ export const People = () => {
       })}
 
       <span> People: {currentSite - 1}</span>
+      <span> Current URL: {url}</span>
 
       <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
     </div>
