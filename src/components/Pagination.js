@@ -13,7 +13,16 @@ export const Pagination = ({ data, setUrl, currentSite, setCurrentSite, location
   return (
     <div>
       {Math.ceil(data?.count / 10) !== 1 && (
-        <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={Math.ceil(data?.count ? Math.ceil(data.count / 10) : 0)} onPageChange={changePage} forcePage={currentSite - 1} />
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={Math.ceil(data?.count ? Math.ceil(data.count / 10) : 0)}
+          onPageChange={changePage}
+          forcePage={currentSite - 1}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={0}
+          breakLabel={null}
+        />
       )}
       <div>Pagination: {currentSite - 1}</div>
     </div>

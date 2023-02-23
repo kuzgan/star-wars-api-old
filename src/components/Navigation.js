@@ -5,8 +5,8 @@ export const Navigation = () => {
   const [currentLocation, setCurrentLocation] = useState(window.location.pathname.replace("/", ""));
   const [data] = useState();
   let location = useLocation();
-  const query = /\\\w+/;
-  const query2 = /\\\w+\\d+/;
+  const query = /\/\w+/;
+  const query2 = /\/\w+\/d+\//;
 
   useEffect(() => {
     setCurrentLocation(location.pathname);
@@ -16,7 +16,11 @@ export const Navigation = () => {
     <div>
       {location.pathname === "/" ? <span>Home</span> : <Link to="/">Home</Link>}
       {location.pathname !== "/" &&
-        (location.pathname === query ? <Link to={`${location.pathname.replace("/", "")}`}>{location.pathname.replace("/", "")}</Link> : <span>{location.pathname.replace("/", "")}</span>)}
+        (query.test(location.pathname) && query2.test(location.pathname) ? (
+          <Link to={`${location.pathname.replace("/", "")}`}>{location.pathname.replace("/", "")}</Link>
+        ) : (
+          <span>{location.pathname.replace("/", "")}</span>
+        ))}
       {(location.pathname !== "/" || location.pathname !== query) && <span>data.title</span>}
 
       {location.pathname === `/`}
