@@ -1,6 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 export const useFetch = () => {
+  const [error, setError] = useState(null);
   const fetchData = useCallback(async (setFunction, url) => {
     try {
       console.log("useFetch:", url);
@@ -12,9 +13,11 @@ export const useFetch = () => {
       const data = await response.json();
       setFunction(data);
       window.history.replaceState(data, "", "");
+      return data;
     } catch (error) {
       console.error("ERROR", error);
+      setError(error.message);
     }
   }, []);
-  return [fetchData];
+  return [fetchData, error];
 };

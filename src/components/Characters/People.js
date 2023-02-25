@@ -8,8 +8,9 @@ export const People = () => {
 
   const [url, setUrl] = useState("");
   const [data, setData] = useState({});
-  const [fetchData] = useFetch();
+  const [fetchData, error] = useFetch();
   const [currentSite, setCurrentSite] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   let location = useLocation();
 
@@ -32,8 +33,10 @@ export const People = () => {
 
   useEffect(() => {
     if (url === "") return;
-    fetchData(setData, url);
-    //window.history.replaceState(undefined, "", "");
+
+    fetchData(setData, url).then(() => {
+      setLoading(false);
+    });
   }, [url]);
 
   const handlePopState = () => {
@@ -50,20 +53,30 @@ export const People = () => {
     };
   }, []);
 
+  if (error) {
+    return <div>There was an error fetching data. {error}</div>;
+  }
+
   return (
-    <div key={currentSite}>
-      {data.results?.map((element, index) => {
-        return (
-          <div key={index}>
-            <Link to={element.url.replace("https://swapi.dev/api", "")}>{element.name}</Link>
-          </div>
-        );
-      })}
+    <div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          {data.results?.map((element, index) => {
+            return (
+              <div key={index}>
+                <Link to={element.url.replace("https://swapi.dev/api", "")}>{element.name}</Link>
+              </div>
+            );
+          })}
 
-      <span> People: {currentSite - 1}</span>
-      <span> Current URL: {url}</span>
+          <span> People: {currentSite - 1}</span>
+          <span> Current URL: {url}</span>
 
-      <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
+          <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
+        </>
+      )}
     </div>
   );
 };
