@@ -9,14 +9,14 @@ import { Vehicles } from "./components/Vehicles";
 import { Person } from "./components/Characters/Person";
 import { Provider } from "react-redux";
 import { store } from "./Store/store";
+import { Navigation } from "./components/Navigation";
 
 function App() {
-  //window.addEventListener("popstate", () => {});
-
   return (
     <div className="App">
       <Provider store={store}>
         <Router>
+          <Navigation />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/people" element={<People />} />
