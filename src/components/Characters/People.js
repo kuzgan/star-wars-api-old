@@ -40,7 +40,7 @@ export const People = () => {
   }, [url]);
 
   const handlePopState = () => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(location.search);
     const page = urlParams.get("page");
     setUrl(`https://swapi.dev/api${location.pathname}/?page=${page}`);
     setCurrentSite(page);

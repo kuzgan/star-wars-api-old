@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useFetch } from "../../useFetch";
 import { Link } from "react-router-dom";
+import { useCapital } from "../../useCapital";
 
 export const Person = () => {
   const [Data, setData] = useState({});
@@ -9,6 +10,7 @@ export const Person = () => {
   const [loading, setLoading] = useState(true);
 
   const [fetchData, error] = useFetch();
+  const [capitalize] = useCapital();
 
   useEffect(() => {
     fetchData(setData, `https://swapi.dev/api${window.location.toString().replace(window.location.origin, "")}`)
@@ -37,13 +39,13 @@ export const Person = () => {
       ) : (
         <>
           <h2>{Data?.name}</h2>
-          <span>Hair color: {Data?.hair_color}</span>
-          <span>Height: {Data?.height}</span>
-          <span>Mass: {Data?.mass}</span>
-          <span>Skin color: {Data?.skin_color}</span>
-          <span>Eye color: {Data?.eye_color}</span>
-          <span>Birth year: {Data?.birth_year}</span>
-          <span>Gender: {Data?.gender}</span>
+          <span>Hair color: {capitalize(Data?.hair_color)}</span>
+          <span>Height: {capitalize(Data?.height)}</span>
+          <span>Mass: {capitalize(Data?.mass)}</span>
+          <span>Skin color: {capitalize(Data?.skin_color)}</span>
+          <span>Eye color: {capitalize(Data?.eye_color)}</span>
+          <span>Birth year: {capitalize(Data?.birth_year)}</span>
+          <span>Gender: {capitalize(Data?.gender)}</span>
           <span>Homeworld: {Data.homeworld ? <Link to={`/${Data.homeworld.replace("https://swapi.dev/api/", "")}`}>{homeworldName.name || "Loading..."}</Link> : <>No data</>}</span>
           <span>Species: {Data.species?.length !== 0 ? <Link to={`/${Data.species[0].replace("https://swapi.dev/api/", "")}`}>{speciesName?.name}</Link> : <>No data</>}</span>
         </>
