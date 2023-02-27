@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useFetch } from "../../useFetch";
 import { Link } from "react-router-dom";
 import { useCapital } from "../../useCapital";
+import { RelatedFilms } from "../RelatedFilms";
 
 export const Person = () => {
   const [Data, setData] = useState({});
@@ -37,7 +38,7 @@ export const Person = () => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <>
+        <div>
           <h2>{Data?.name}</h2>
           <span>Hair color: {capitalize(Data?.hair_color)}</span>
           <span>Height: {capitalize(Data?.height)}</span>
@@ -48,8 +49,9 @@ export const Person = () => {
           <span>Gender: {capitalize(Data?.gender)}</span>
           <span>Homeworld: {Data.homeworld ? <Link to={`/${Data.homeworld.replace("https://swapi.dev/api/", "")}`}>{homeworldName.name || "Loading..."}</Link> : <>No data</>}</span>
           <span>Species: {Data.species?.length !== 0 ? <Link to={`/${Data.species[0].replace("https://swapi.dev/api/", "")}`}>{speciesName?.name}</Link> : <>No data</>}</span>
-        </>
+        </div>
       )}
+      <RelatedFilms films={Data?.films} />
     </div>
   );
 };
