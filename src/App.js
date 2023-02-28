@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Films } from "./components/Films";
+import { Films } from "./components/Films/Films";
 import { Home } from "./components/Home";
 import { People } from "./components/Characters/People";
-import { Planets } from "./components/Planets";
-import { Species } from "./components/Species";
-import { Starships } from "./components/Starships";
-import { Vehicles } from "./components/Vehicles";
+import { Planets } from "./components/Planets/Planets";
+import { Species } from "./components/Species/Species";
+import { Starships } from "./components/Starships/Starships";
+import { Vehicles } from "./components/Vehicles/Vehicles";
 import { Person } from "./components/Characters/Person";
 import { Provider } from "react-redux";
 import { store } from "./Store/store";

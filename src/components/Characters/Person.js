@@ -3,6 +3,8 @@ import { useFetch } from "../../useFetch";
 import { Link } from "react-router-dom";
 import { useCapital } from "../../useCapital";
 import { RelatedFilms } from "../RelatedFilms";
+import { useSelector, useDispatch } from "react-redux";
+import { changeName, changeToInitial } from "../Store/nameSlice";
 
 export const Person = () => {
   const [Data, setData] = useState({});
@@ -10,12 +12,15 @@ export const Person = () => {
   const [speciesName, setSpeciesName] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const dispatch = useDispatch();
+
   const [fetchData, error] = useFetch();
   const [capitalize] = useCapital();
 
   useEffect(() => {
     fetchData(setData, `https://swapi.dev/api${window.location.toString().replace(window.location.origin, "")}`)
       .then((Data) => {
+        dispatch(changeName({ name: Data.title }));
         if (Data.homeworld) {
           fetchData(setHomeworldName, Data.homeworld);
         }
@@ -51,7 +56,7 @@ export const Person = () => {
           <span>Species: {Data.species?.length !== 0 ? <Link to={`/${Data.species[0].replace("https://swapi.dev/api/", "")}`}>{speciesName?.name}</Link> : <>No data</>}</span>
         </div>
       )}
-      <RelatedFilms films={Data?.films} />
+      <RelatedFilms films={Data.films} />
     </div>
   );
 };
