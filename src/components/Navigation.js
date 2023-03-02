@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 export const Navigation = () => {
   const [title, setTitle] = useState();
   const titleOfPage = useSelector((state) => {
-    return state.name.value.name;
+    return state.name.value;
   });
   let location = useLocation();
 
@@ -15,12 +15,14 @@ export const Navigation = () => {
   const query = /\/\w+/;
   const query2 = /\/\w+\/\d+/;
 
-  useEffect(() => {
-    setTitle(titleOfPage);
-    return () => {
-      dispatch(changeToInitial());
-    };
-  }, [titleOfPage]);
+  // useEffect(() => {
+  //   console.log("To redux", titleOfPage);
+  //   setTitle(titleOfPage);
+  //   console.log("To redux2 ", title);
+  //   return () => {
+  //     dispatch(changeToInitial());
+  //   };
+  // }, [titleOfPage]);
 
   return (
     <div>
@@ -33,8 +35,8 @@ export const Navigation = () => {
         <span>{location.pathname.replace("/", "")}</span>
       )}
       {query2.test(location.pathname) && <span>/</span>}
-      {/* {query2.test(location.pathname) && <span>{location.pathname.replace(/[a-zA-Z]|\//g, "")}</span>} */}
-      {query2.test(location.pathname) && <span>{title}</span>}
+      {query2.test(location.pathname) && <span>{location.pathname.replace(/[a-zA-Z]|\//g, "")}</span>}
+      {/* {query2.test(location.pathname) && <span>{title}</span>} */}
     </div>
   );
 };

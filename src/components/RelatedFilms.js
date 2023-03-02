@@ -8,7 +8,6 @@ export const RelatedFilms = ({ films }) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    console.log(films);
     if (!films) return;
     Promise.all(films.map((element) => fetch(element).then((res) => res.json())))
       .then((data) => {
