@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useFetch } from "../../useFetch";
 import { Link } from "react-router-dom";
 import { useCapital } from "../../useCapital";
-import { RelatedFilms } from "../RelatedFilms";
 import { useSelector, useDispatch } from "react-redux";
 import { changeName, changeToInitial } from "../../Store/nameSlice";
+import { RelatedFilms } from "../Widgets/RelatedFilms";
+import { RelatedVehicles } from "../Widgets/RelatedVehicles";
 
 export const Person = () => {
   const [Data, setData] = useState({});
@@ -66,11 +67,12 @@ export const Person = () => {
           <span>Birth year: {capitalize(Data?.birth_year)}</span>
           <span>Gender: {capitalize(Data?.gender)}</span>
           <span>Homeworld: {Data.homeworld ? <Link to={`/${Data.homeworld.replace("https://swapi.dev/api/", "")}`}>{homeworldName.name || "Loading..."}</Link> : <>No data</>}</span>
-          <span>Species: {Data.species?.length !== 0 ? <Link to={`/${Data.species[0].replace("https://swapi.dev/api/", "")}`}>{speciesName?.name}</Link> : <>No data</>}</span>
+          <span>Species: {Data.species?.length !== 0 ? <Link to={`/${Data.species[0].replace("https://swapi.dev/api/", "")}`}>{speciesName?.name || "Loading..."}</Link> : <>No data</>}</span>
         </div>
       )}
 
       <RelatedFilms films={Data.films} />
+      <RelatedVehicles vehicles={Data.vehicles} />
     </div>
   );
 };

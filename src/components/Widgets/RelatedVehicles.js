@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useFetch } from "../useFetch";
+import { useFetch } from "../../useFetch";
 
-export const RelatedFilms = ({ films }) => {
-  const [arrayOfFilms, setArrayOfFilms] = useState([]);
+export const RelatedVehicles = ({ vehicles }) => {
+  const [arrayOfVehicles, setArrayOfVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (!films) return;
-    Promise.all(films.map((element) => fetch(element).then((res) => res.json())))
+    if (!vehicles) return;
+    Promise.all(vehicles.map((element) => fetch(element).then((res) => res.json())))
       .then((data) => {
-        setArrayOfFilms((previousArray) => [...previousArray, ...data.flat()]);
+        setArrayOfVehicles((previousArray) => [...previousArray, ...data.flat()]);
         setLoading(false);
-        console.log(arrayOfFilms);
+        console.log(arrayOfVehicles);
       })
       .catch(() => {
         setError(true);
       });
-  }, [films]);
+  }, [vehicles]);
 
   if (error) {
     return (
@@ -31,23 +31,23 @@ export const RelatedFilms = ({ films }) => {
 
   return (
     <div>
-      <h3>Related Films</h3>
+      <h3>Related Vehicles</h3>
       {loading ? (
-        <div>Loading related films...</div>
-      ) : films.length !== 0 ? (
+        <div>Loading related vehicles...</div>
+      ) : vehicles.length !== 0 ? (
         <div>
           <span>
-            {films.map((element, index) => {
+            {vehicles.map((element, index) => {
               return (
                 <Link key={index} to={element.replace("https://swapi.dev/api", "")}>
-                  {arrayOfFilms[index].title}
+                  {arrayOfVehicles[index].title}
                 </Link>
               );
             })}
           </span>
         </div>
       ) : (
-        <span>No Related Films, There Is.</span>
+        <span>No Related Vehicles, There Is.</span>
       )}
     </div>
   );
