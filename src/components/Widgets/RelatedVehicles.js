@@ -40,7 +40,7 @@ export const RelatedVehicles = ({ vehicles }) => {
             {vehicles.map((element, index) => {
               return (
                 <Link key={index} to={element.replace("https://swapi.dev/api", "")}>
-                  {arrayOfVehicles[index].title}
+                  {arrayOfVehicles[index].name}
                 </Link>
               );
             })}

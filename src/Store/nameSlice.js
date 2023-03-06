@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { value: "" };
 export const nameSlice = createSlice({
   name: "name",
-  initialState,
+  initialState: { value: "" },
   reducers: {
     changeName: (state, action) => {
       state.value = action.payload;
