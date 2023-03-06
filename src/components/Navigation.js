@@ -10,23 +10,11 @@ export const Navigation = () => {
   });
   let location = useLocation();
 
-  const dispatch = useDispatch();
-
   const query = /\/\w+/;
   const query2 = /\/\w+\/\d+/;
 
-  // useEffect(() => {
-  //   console.log("To redux", titleOfPage);
-  //   setTitle(titleOfPage);
-  //   console.log("To redux2 ", title);
-  //   return () => {
-  //     dispatch(changeToInitial());
-  //   };
-  // }, [titleOfPage]);
-
   return (
     <div>
-      {titleOfPage}
       {location.pathname === "/" ? <span>home</span> : <Link to="/">home</Link>}
       {location.pathname !== "/" && <span>/</span>}
       {query.test(location.pathname) && query2.test(location.pathname) ? (
@@ -35,8 +23,8 @@ export const Navigation = () => {
         <span>{location.pathname.replace("/", "")}</span>
       )}
       {query2.test(location.pathname) && <span>/</span>}
-      {query2.test(location.pathname) && <span>{location.pathname.replace(/[a-zA-Z]|\//g, "")}</span>}
-      {/* {query2.test(location.pathname) && <span>{title}</span>} */}
+      {/* {query2.test(location.pathname) && <span>{location.pathname.replace(/[a-zA-Z]|\//g, "")}</span>} */}
+      {query2.test(location.pathname) && <span>{titleOfPage}</span>}
     </div>
   );
 };

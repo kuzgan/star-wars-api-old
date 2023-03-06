@@ -9,7 +9,7 @@ export const nameSlice = createSlice({
       state.value = action.payload;
     },
     changeToInitial: (state) => {
-      state.value = initialState;
+      state.value = "";
     },
   },
 });

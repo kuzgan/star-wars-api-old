@@ -15,28 +15,36 @@ export const Person = () => {
   // const titleOfPage = useSelector((state) => {
   //   return state.name.value;
   // });
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [fetchData, error] = useFetch();
   const [capitalize] = useCapital();
 
   useEffect(() => {
     fetchData(setData, `https://swapi.dev/api${window.location.toString().replace(window.location.origin, "")}`)
-      .then((Data) => {
+      .then((data) => {
         // console.log(Data);
         // dispatch(changeName(Data.name));
 
-        if (Data.homeworld) {
-          fetchData(setHomeworldName, Data.homeworld);
+        if (data.homeworld) {
+          fetchData(setHomeworldName, data.homeworld);
         }
-        if (Data.species.length !== 0) {
-          fetchData(setSpeciesName, Data.species[0]);
+        if (data.species.length !== 0) {
+          fetchData(setSpeciesName, data.species[0]);
         }
         setLoading(false);
+        console.log(data);
+        dispatch(changeName(data.name));
       })
       .catch((error) => {
         console.error(error);
       });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(changeToInitial());
+    };
   }, []);
 
   if (error) {
