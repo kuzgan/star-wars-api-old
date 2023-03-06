@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { changeName, changeToInitial } from "../Store/nameSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Navigation = () => {
+  const [title, setTitle] = useState();
+  const titleOfPage = useSelector((state) => {
+    return state.name.value;
+  });
   let location = useLocation();
 
   const query = /\/\w+/;
@@ -17,7 +23,8 @@ export const Navigation = () => {
         <span>{location.pathname.replace("/", "")}</span>
       )}
       {query2.test(location.pathname) && <span>/</span>}
-      {query2.test(location.pathname) && <span>{location.pathname.replace(/[a-zA-Z]|\//g, "")}</span>}
+      {/* {query2.test(location.pathname) && <span>{location.pathname.replace(/[a-zA-Z]|\//g, "")}</span>} */}
+      {query2.test(location.pathname) && <span>{titleOfPage}</span>}
     </div>
   );
 };

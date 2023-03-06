@@ -80,17 +80,3 @@ export const People = () => {
     </div>
   );
 };
-
-// const changePage = useCallback(({ selected }) => {
-//   if (selected !== currentSite - 1) {
-//     setUrl(`https://swapi.dev/api${location.pathname}/?page=${+selected + 1}&format=json`);
-//     window.history.pushState(undefined, "", `?page=${selected + 1}`);
-//     setCurrentSite(selected + 1);
-//   }
-// });
-
-{
-  /* {Math.ceil(data?.count / 10) !== 1 && (
-        <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={Math.ceil(data?.count ? Math.ceil(data.count / 10) : 0)} onPageChange={changePage} forcePage={currentSite - 1} />
-      )} */
-}

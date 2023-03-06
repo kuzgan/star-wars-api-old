@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useFetch } from "../../useFetch";
 import { Link } from "react-router-dom";
 import { useCapital } from "../../useCapital";
+import { useSelector, useDispatch } from "react-redux";
+import { changeName, changeToInitial } from "../../Store/nameSlice";
+import { RelatedFilms } from "../Widgets/RelatedFilms";
+import { RelatedVehicles } from "../Widgets/RelatedVehicles";
 
 export const Person = () => {
   const [Data, setData] = useState({});
@@ -9,23 +13,39 @@ export const Person = () => {
   const [speciesName, setSpeciesName] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // const titleOfPage = useSelector((state) => {
+  //   return state.name.value;
+  // });
+  const dispatch = useDispatch();
+
   const [fetchData, error] = useFetch();
   const [capitalize] = useCapital();
 
   useEffect(() => {
     fetchData(setData, `https://swapi.dev/api${window.location.toString().replace(window.location.origin, "")}`)
-      .then((Data) => {
-        if (Data.homeworld) {
-          fetchData(setHomeworldName, Data.homeworld);
+      .then((data) => {
+        // console.log(Data);
+        // dispatch(changeName(Data.name));
+
+        if (data.homeworld) {
+          fetchData(setHomeworldName, data.homeworld);
         }
-        if (Data.species.length !== 0) {
-          fetchData(setSpeciesName, Data.species[0]);
+        if (data.species.length !== 0) {
+          fetchData(setSpeciesName, data.species[0]);
         }
         setLoading(false);
+        console.log(data);
+        dispatch(changeName(data.name));
       })
       .catch((error) => {
         console.error(error);
       });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(changeToInitial());
+    };
   }, []);
 
   if (error) {
@@ -37,7 +57,7 @@ export const Person = () => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <>
+        <div>
           <h2>{Data?.name}</h2>
           <span>Hair color: {capitalize(Data?.hair_color)}</span>
           <span>Height: {capitalize(Data?.height)}</span>
@@ -47,9 +67,12 @@ export const Person = () => {
           <span>Birth year: {capitalize(Data?.birth_year)}</span>
           <span>Gender: {capitalize(Data?.gender)}</span>
           <span>Homeworld: {Data.homeworld ? <Link to={`/${Data.homeworld.replace("https://swapi.dev/api/", "")}`}>{homeworldName.name || "Loading..."}</Link> : <>No data</>}</span>
-          <span>Species: {Data.species?.length !== 0 ? <Link to={`/${Data.species[0].replace("https://swapi.dev/api/", "")}`}>{speciesName?.name}</Link> : <>No data</>}</span>
-        </>
+          <span>Species: {Data.species?.length !== 0 ? <Link to={`/${Data.species[0].replace("https://swapi.dev/api/", "")}`}>{speciesName?.name || "Loading..."}</Link> : <>No data</>}</span>
+        </div>
       )}
+
+      <RelatedFilms films={Data.films} />
+      <RelatedVehicles vehicles={Data.vehicles} />
     </div>
   );
 };
