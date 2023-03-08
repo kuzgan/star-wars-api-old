@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useFetch } from "../../Hooks/useFetch";
-import { Link, useLocation } from "react-router-dom";
-import { usePaginatedData } from "../../Hooks/usePaginatedData";
-import { Pagination } from "../Pagination";
+import { useEffect, useState, useCallback } from "react";
+import { useFetch } from "./useFetch";
+import { useLocation } from "react-router-dom";
 
-export const Species = () => {
+export const usePaginatedData = () => {
   const [url, setUrl] = useState("");
   const [data, setData] = useState({});
   const [currentSite, setCurrentSite] = useState(1);
@@ -56,30 +54,5 @@ export const Species = () => {
     };
   }, [url]);
 
-  if (error) {
-    return <div>There was an error fetching data. {error}</div>;
-  }
-
-  return (
-    <div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div>
-          {data.results?.map((element, index) => {
-            return (
-              <div key={index}>
-                <Link to={element.url.replace("https://swapi.dev/api", "")}>{element.name}</Link>
-              </div>
-            );
-          })}
-
-          <span> People: {currentSite - 1}</span>
-          <span> Current URL: {url}</span>
-
-          <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
-        </div>
-      )}
-    </div>
-  );
+  return { url, setUrl, loading, data, error, currentSite, setCurrentSite, location };
 };

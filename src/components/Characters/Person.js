@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useFetch } from "../../useFetch";
+import { useFetch } from "../../Hooks/useFetch";
 import { Link } from "react-router-dom";
-import { useCapital } from "../../useCapital";
+import { useCapital } from "../../Hooks/useCapital";
 import { useSelector, useDispatch } from "react-redux";
 import { changeName, changeToInitial } from "../../Store/nameSlice";
 import { RelatedFilms } from "../Widgets/RelatedFilms";
 import { RelatedVehicles } from "../Widgets/RelatedVehicles";
+import { RelatedStarships } from "../Widgets/RelatedStarships";
 
 export const Person = () => {
   const [Data, setData] = useState({});
@@ -13,9 +14,6 @@ export const Person = () => {
   const [speciesName, setSpeciesName] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // const titleOfPage = useSelector((state) => {
-  //   return state.name.value;
-  // });
   const dispatch = useDispatch();
 
   const [fetchData, error] = useFetch();
@@ -24,9 +22,6 @@ export const Person = () => {
   useEffect(() => {
     fetchData(setData, `https://swapi.dev/api${window.location.toString().replace(window.location.origin, "")}`)
       .then((data) => {
-        // console.log(Data);
-        // dispatch(changeName(Data.name));
-
         if (data.homeworld) {
           fetchData(setHomeworldName, data.homeworld);
         }
@@ -34,7 +29,6 @@ export const Person = () => {
           fetchData(setSpeciesName, data.species[0]);
         }
         setLoading(false);
-        console.log(data);
         dispatch(changeName(data.name));
       })
       .catch((error) => {
@@ -71,8 +65,9 @@ export const Person = () => {
         </div>
       )}
 
-      <RelatedFilms films={Data.films} />
-      <RelatedVehicles vehicles={Data.vehicles} />
+      <RelatedFilms urls={Data.films} />
+      <RelatedVehicles urls={Data.vehicles} />
+      <RelatedStarships urls={Data.starships} />
     </div>
   );
 };

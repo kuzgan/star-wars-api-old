@@ -12,7 +12,7 @@ export const useFetch = () => {
       }
       const data = await response.json();
       setFunction(data);
-      window.history.replaceState(data, "", "");
+      //window.history.replaceState(data, "", "");
       return data;
     } catch (error) {
       console.error("ERROR", error);
