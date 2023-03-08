@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useFetch } from "./useFetch";
 import { useLocation } from "react-router-dom";
 
-export const usePaginatedData = () => {
+export const usePageLogic = () => {
   const [url, setUrl] = useState("");
   const [data, setData] = useState({});
   const [currentSite, setCurrentSite] = useState(1);

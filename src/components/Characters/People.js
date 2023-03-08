@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { usePaginatedData } from "../../Hooks/usePaginatedData";
+import { usePageLogic } from "../../Hooks/usePageLogic";
 import { Pagination } from "../Pagination";
 
 export const People = () => {
   // https://swapi.dev/api/people/?page=1&format=json
-  const { setUrl, loading, data, error, currentSite, setCurrentSite, location } = usePaginatedData();
+  const { setUrl, loading, data, error, currentSite, setCurrentSite, location } = usePageLogic();
 
   if (error) {
     return <div>There was an error fetching data. {error}</div>;
