@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useFetch } from "../Hooks/useFetch";
-import { useCapital } from "../Hooks/useCapital";
+import { useFetch } from "./useFetch";
 import { useDispatch } from "react-redux";
 import { changeName, changeToInitial } from "../Store/nameSlice";
 
-export const useSubpagelogic = () => {
+export const useSubpageLogic = () => {
   const [data, setData] = useState({});
   const [homeworldName, setHomeworldName] = useState("");
   const [speciesName, setSpeciesName] = useState("");
@@ -20,11 +19,11 @@ export const useSubpagelogic = () => {
         if (fetchedObject.homeworld) {
           fetchData(setHomeworldName, fetchedObject.homeworld);
         }
-        if (fetchedObject.species.length !== 0) {
+        if (fetchedObject.species && fetchedObject.species.length !== 0) {
           fetchData(setSpeciesName, fetchedObject.species[0]);
         }
         setLoading(false);
-        dispatch(changeName(fetchedObject.name));
+        dispatch(changeName(Object.values(fetchedObject)[0]));
       })
       .catch((error) => {
         console.error(error);
@@ -37,5 +36,5 @@ export const useSubpagelogic = () => {
     };
   }, []);
 
-  return { data };
+  return { data, error, loading, homeworldName, speciesName };
 };

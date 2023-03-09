@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useFetch } from "../../Hooks/useFetch";
 import { Link } from "react-router-dom";
 import { useCapital } from "../../Hooks/useCapital";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeName, changeToInitial } from "../../Store/nameSlice";
 import { RelatedFilms } from "../Widgets/RelatedFilms";
 import { RelatedVehicles } from "../Widgets/RelatedVehicles";
