@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useFetch } from "../../Hooks/useFetch";
 import { useRelatedResources } from "../../Hooks/useRelatedResources";
 
 export const RelatedVehicles = ({ urls }) => {
@@ -26,7 +25,7 @@ export const RelatedVehicles = ({ urls }) => {
             {data.map((element, index) => {
               return (
                 <Link key={index} to={element.url.replace("https://swapi.dev/api", "")}>
-                  {element.name}
+                  {Object.values(element)[0]}
                 </Link>
               );
             })}

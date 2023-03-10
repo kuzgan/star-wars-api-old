@@ -1,15 +1,15 @@
-import React, { useCallback } from "react";
+import React from "react";
 import ReactPaginate from "react-paginate";
 
 export const Pagination = ({ data, setUrl, currentSite, setCurrentSite, location }) => {
-  const changePage = useCallback(({ selected }) => {
+  const changePage = ({ selected }) => {
     if (selected !== currentSite - 1) {
       console.log("selected", selected + 1);
       setUrl(`https://swapi.dev/api${location.pathname}/?page=${+selected + 1}`);
       window.history.pushState(undefined, "", `?page=${selected + 1}`);
       setCurrentSite(selected + 1);
     }
-  });
+  };
 
   return (
     <div>
@@ -25,7 +25,6 @@ export const Pagination = ({ data, setUrl, currentSite, setCurrentSite, location
           breakLabel={null}
         />
       )}
-      <div>Pagination: {currentSite - 1}</div>
     </div>
   );
 };

@@ -4,7 +4,6 @@ import { usePageLogic } from "../../Hooks/usePageLogic";
 import { Pagination } from "../Pagination";
 
 export const People = () => {
-  // https://swapi.dev/api/people/?page=1&format=json
   const { setUrl, loading, data, error, currentSite, setCurrentSite, location } = usePageLogic();
 
   if (error) {
