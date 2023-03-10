@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useRelatedResources } from "../../Hooks/useRelatedResources";
 
-export const RelatedFilms = ({ urls }) => {
+export const RelatedSpecies = ({ urls }) => {
   const { data, loading, error } = useRelatedResources(urls);
 
   if (error) {
     return (
       <div>
-        <h3>Related Films</h3>
+        <h3>Related Species</h3>
         <span>There was an error fetching data. {error}</span>
       </div>
     );
@@ -16,9 +16,9 @@ export const RelatedFilms = ({ urls }) => {
 
   return (
     <div>
-      <h3>Related Films</h3>
+      <h3>Related Species</h3>
       {loading ? (
-        <div>Loading related films...</div>
+        <div>Loading related species...</div>
       ) : data.length !== 0 ? (
         <div>
           <span>
@@ -32,7 +32,7 @@ export const RelatedFilms = ({ urls }) => {
           </span>
         </div>
       ) : (
-        <span>No Related Films, There Is.</span>
+        <span>No Related Species, There Is.</span>
       )}
     </div>
   );
