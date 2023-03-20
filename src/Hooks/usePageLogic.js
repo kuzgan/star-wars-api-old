@@ -34,7 +34,7 @@ export const usePageLogic = () => {
   useEffect(() => {
     console.log("url", url);
     if (url === "") return;
-
+    setLoading(true);
     fetchData(setData, url).then(() => {
       setLoading(false);
     });

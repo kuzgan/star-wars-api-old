@@ -15,7 +15,7 @@ export const Planets = () => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <>
+        <div>
           {data.results?.map((element, index) => {
             return (
               <div key={index}>
@@ -23,9 +23,9 @@ export const Planets = () => {
               </div>
             );
           })}
-          <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
-        </>
+        </div>
       )}
+      <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
     </div>
   );
 };
