@@ -1,5 +1,9 @@
 import React from "react";
 
 export const Header = () => {
-  return <div>Header</div>;
+  return (
+    <div>
+      <span>Star wars visual guide</span>
+    </div>
+  );
 };
