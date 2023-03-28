@@ -23,9 +23,9 @@ export const People = () => {
               </div>
             );
           })}
-          <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
         </div>
       )}
+      <Pagination data={data} setUrl={setUrl} currentSite={currentSite} setCurrentSite={setCurrentSite} location={location} />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 export const usePageLogic = () => {
   const [url, setUrl] = useState("");
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [currentSite, setCurrentSite] = useState(1);
   const [loading, setLoading] = useState(true);
 
@@ -34,7 +34,7 @@ export const usePageLogic = () => {
   useEffect(() => {
     console.log("url", url);
     if (url === "") return;
-
+    setLoading(true);
     fetchData(setData, url).then(() => {
       setLoading(false);
     });

@@ -15,6 +15,8 @@ import { Vehicle } from "./components/Vehicles/Vehicle";
 import { Provider } from "react-redux";
 import { store } from "./Store/store";
 import { Navigation } from "./components/Navigation";
+import { PageNotFound } from "./components/PageNotFound";
+import { Footer } from "./components/Footer";
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Router>
           <Navigation />
           <Routes>
+            <Route path="*" element={<PageNotFound />} />
             <Route path="/" element={<Home />} />
             <Route path="/people" element={<People />} />
             <Route path="/people/:id" element={<Person />} />
@@ -37,6 +40,7 @@ function App() {
             <Route path="/species" element={<Species />} />
             <Route path="/species/:id" element={<Specie />} />
           </Routes>
+          <Footer />
         </Router>
       </Provider>
     </div>
