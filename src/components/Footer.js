@@ -5,7 +5,9 @@ export const Footer = () => {
   return (
     <div>
       <p>Made by ME.</p>
-      <Link to="https://github.com/kuzgan">Check out my GitHub</Link>
+      <Link to="https://github.com/kuzgan" target={"_blank"}>
+        Check out my GitHub
+      </Link>
     </div>
   );
 };
