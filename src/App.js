@@ -17,6 +17,7 @@ import { store } from "./Store/store";
 import { Navigation } from "./components/Navigation";
 import { PageNotFound } from "./components/PageNotFound";
 import { Footer } from "./components/Footer";
+//import "./App.scss";
 
 function App() {
   return (

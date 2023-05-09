@@ -5,7 +5,6 @@ import { useCapital } from "../../Hooks/useCapital";
 import { RelatedFilms } from "../Widgets/RelatedFilms";
 import { RelatedCharacters } from "../Widgets/RelatedCharacters";
 //import "../../scss/components/index.scss";
-import "./specie.scss";
 
 export const Specie = () => {
   const { data, error, loading, homeworldName } = useSubpageLogic();
@@ -20,7 +19,6 @@ export const Specie = () => {
         <div>Loading...</div>
       ) : (
         <div>
-          <h2 className="test">{data?.name}</h2>
           <span>Classification: {capitalize(data?.classification)}</span>
           <span>Designation: {capitalize(data?.designation)}</span>
           <span>Average height: {capitalize(data?.average_height)}</span>
